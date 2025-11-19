@@ -12,7 +12,7 @@ function AppContent() {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false); // Eliminado porque no se usa
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -21,22 +21,18 @@ function AppContent() {
   }, [isAuthenticated]);
 
   const loadData = async () => {
-    setIsLoading(true);
     try {
       const projectsData = await api.projects.list();
       setProjects(projectsData);
-      
       // Load tasks for all projects
       if (projectsData.length > 0) {
         const allTasks = await Promise.all(
-          projectsData.map(project => api.tasks.list(project.id))
+          projectsData.map((project) => api.tasks.list(project.id))
         );
         setTasks(allTasks.flat());
       }
     } catch (error) {
       console.error('Error loading data:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

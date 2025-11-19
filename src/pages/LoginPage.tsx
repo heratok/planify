@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Layout, LogIn, Mail, Lock, Loader2 } from 'lucide-react';
+import { Layout, Mail, Lock, Loader2 } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
   const { login, signUp, isLoading } = useAuth();
@@ -41,21 +41,26 @@ const LoginPage: React.FC = () => {
             </div>
             <h1 className="text-5xl font-bold mb-6">Planify</h1>
             <p className="text-xl text-primary-100 max-w-md">
-              Manage your projects with clarity and style. The modern way to collaborate and get things done.
+              Manage your projects with clarity and style. The modern way to
+              collaborate and get things done.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-6 mt-12">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
               <h3 className="font-semibold text-lg mb-2">Organize</h3>
-              <p className="text-primary-100 text-sm">Keep all your tasks in one place with intuitive boards.</p>
+              <p className="text-primary-100 text-sm">
+                Keep all your tasks in one place with intuitive boards.
+              </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10">
               <h3 className="font-semibold text-lg mb-2">Collaborate</h3>
-              <p className="text-primary-100 text-sm">Work together with your team in real-time.</p>
+              <p className="text-primary-100 text-sm">
+                Work together with your team in real-time.
+              </p>
             </div>
           </div>
         </div>
-        
+
         {/* Decorative circles */}
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-500/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary-400/30 rounded-full blur-3xl" />
@@ -72,14 +77,19 @@ const LoginPage: React.FC = () => {
               {isLogin ? 'Welcome back' : 'Create an account'}
             </h2>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {isLogin ? 'Enter your details to access your account' : 'Get started with Planify today'}
+              {isLogin
+                ? 'Enter your details to access your account'
+                : 'Get started with Planify today'}
             </p>
           </div>
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Email address
                 </label>
                 <div className="relative">
@@ -101,7 +111,10 @@ const LoginPage: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -127,12 +140,22 @@ const LoginPage: React.FC = () => {
               <div className="rounded-lg bg-red-50 dark:bg-red-900/20 p-4 border border-red-100 dark:border-red-800">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    <svg
+                      className="h-5 w-5 text-red-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
+                    <p className="text-sm text-red-700 dark:text-red-400">
+                      {error}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -145,8 +168,10 @@ const LoginPage: React.FC = () => {
             >
               {isLoading ? (
                 <Loader2 className="animate-spin h-5 w-5" />
+              ) : isLogin ? (
+                'Sign in'
               ) : (
-                isLogin ? 'Sign in' : 'Create account'
+                'Create account'
               )}
             </button>
 
@@ -156,7 +181,9 @@ const LoginPage: React.FC = () => {
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400"
               >
-                {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+                {isLogin
+                  ? "Don't have an account? Sign up"
+                  : 'Already have an account? Sign in'}
               </button>
             </div>
           </form>
