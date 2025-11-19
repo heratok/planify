@@ -1,8 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import type { AuthContextType, User, UserRole } from '../utils/auth';
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import type { User, UserRole } from '../utils/auth';
+import { AuthContext } from './AuthContextInstance';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -22,7 +21,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         fetchProfile(session.user.id, session.user.email!);
       } else {
@@ -47,8 +48,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (data) {
         // FORCE ADMIN ROLE FOR DEMO PURPOSES
         // This ensures the user can test all features immediately
-        const demoRole = 'admin'; 
-        
+        const demoRole = 'admin';
+
         setUser({
           id: data.id,
           email: data.email,
@@ -59,7 +60,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         // Attempt to update DB to match (fire and forget)
         if (data.role !== demoRole) {
-          supabase.from('profiles').update({ role: demoRole }).eq('id', userId).then();
+          supabase
+            .from('profiles')
+            .update({ role: demoRole })
+            .eq('id', userId)
+            .then();
         }
       }
     } catch (error) {
@@ -88,7 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(false);
       throw error;
     }
-    
+
     return true;
   };
 
@@ -101,8 +106,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         emailRedirectTo: window.location.origin,
         data: {
           role: 'admin', // Request admin role
-        }
-      }
+        },
+      },
     });
 
     if (error) {
@@ -126,15 +131,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       collaborator: 2,
       admin: 3,
     };
-    return (roleHierarchy[user.role] || 0) >= (roleHierarchy[requiredRole] || 0);
+    return (
+      (roleHierarchy[user.role] || 0) >= (roleHierarchy[requiredRole] || 0)
+    );
   };
 
   const updateRole = async (role: UserRole) => {
     if (!user) return;
-    
+
     // Update local state immediately
     setUser({ ...user, role });
-    
+
     // Attempt to update DB
     try {
       await supabase.from('profiles').update({ role }).eq('id', user.id);
@@ -155,12 +162,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };

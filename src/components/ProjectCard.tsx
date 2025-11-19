@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   // Mock progress for visual demonstration
   const progress = Math.floor(Math.random() * 100);
-  
+
   return (
     <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all duration-200 flex flex-col h-full">
       <div className="p-5 flex-1">
@@ -35,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               {new Date(project.createdAt).toLocaleDateString()}
             </p>
           </div>
-          
+
           {(canEdit || canDelete) && (
             <div className="relative ml-2">
               <div className="flex gap-1">
@@ -78,7 +78,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             <span>{progress}%</span>
           </div>
           <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="bg-primary-500 h-2 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NotificationProvider } from './context/NotificationContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/useAuth';
 import { ThemeProvider } from './context/ThemeContext';
 import LayoutWrapper from './components/LayoutWrapper';
 import LoginPage from './pages/LoginPage';

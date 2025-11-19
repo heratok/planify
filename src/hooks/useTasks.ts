@@ -59,7 +59,7 @@ export const useTasks = ({ tasks, setTasks }: UseTasksProps) => {
 
     try {
       const updatedTask = await api.tasks.update(taskId, updates);
-      
+
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
           task.id === taskId ? { ...task, ...updatedTask } : task
@@ -80,7 +80,7 @@ export const useTasks = ({ tasks, setTasks }: UseTasksProps) => {
 
     try {
       await api.tasks.delete(taskId);
-      
+
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
       addNotification('success', 'Task deleted successfully');
     } catch (error) {

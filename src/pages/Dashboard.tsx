@@ -11,7 +11,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { LayoutDashboard, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import {
+  LayoutDashboard,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+} from 'lucide-react';
 import type { Project, Task } from '../utils/types';
 
 interface DashboardProps {
@@ -24,7 +29,9 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
   const stats = useMemo(() => {
     const totalProjects = projects.length;
     const totalTasks = tasks.length;
-    const completedTasks = tasks.filter((task) => task.status === 'Done').length;
+    const completedTasks = tasks.filter(
+      (task) => task.status === 'Done'
+    ).length;
     const pendingTasks = totalTasks - completedTasks;
 
     return {
@@ -57,19 +64,13 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
     }));
   }, [tasks]);
 
-  const StatCard: React.FC<{ 
-    title: string; 
-    value: number; 
+  const StatCard: React.FC<{
+    title: string;
+    value: number;
     icon: React.ElementType;
     color: string;
     bgColor: string;
-  }> = ({
-    title,
-    value,
-    icon: Icon,
-    color,
-    bgColor,
-  }) => (
+  }> = ({ title, value, icon: Icon, color, bgColor }) => (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
         <div>
@@ -154,12 +155,12 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
                       borderRadius: '8px',
                       border: 'none',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     }}
                   />
                 </PieChart>
@@ -167,8 +168,13 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
               <div className="flex justify-center gap-6 mt-4">
                 {priorityData.map((entry) => (
                   <div key={entry.name} className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }} />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{entry.name}</span>
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: entry.color }}
+                    />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {entry.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -197,35 +203,41 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
                 ]}
                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                <XAxis 
-                  dataKey="name" 
-                  axisLine={false} 
-                  tickLine={false} 
-                  tick={{ fill: '#6B7280' }} 
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="#E5E7EB"
+                />
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#6B7280' }}
                   dy={10}
                 />
-                <YAxis 
-                  axisLine={false} 
-                  tickLine={false} 
-                  tick={{ fill: '#6B7280' }} 
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: '#6B7280' }}
                 />
                 <Tooltip
                   cursor={{ fill: 'transparent' }}
-                  contentStyle={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
                     borderRadius: '8px',
                     border: 'none',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                   }}
                 />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={40}>
-                  {[stats.completedTasks, stats.pendingTasks].map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={index === 0 ? '#10b981' : '#f59e0b'}
-                    />
-                  ))}
+                  {[stats.completedTasks, stats.pendingTasks].map(
+                    (_, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={index === 0 ? '#10b981' : '#f59e0b'}
+                      />
+                    )
+                  )}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
@@ -265,13 +277,15 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
                     {task.title}
                   </p>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                      task.priority === 'High'
-                        ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                        : task.priority === 'Medium'
-                          ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                          : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                    }`}>
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                        task.priority === 'High'
+                          ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                          : task.priority === 'Medium'
+                            ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                            : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                      }`}
+                    >
                       {task.priority}
                     </span>
                     <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -285,7 +299,9 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
                   {task.assignedUser}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date'}
+                  {task.dueDate
+                    ? new Date(task.dueDate).toLocaleDateString()
+                    : 'No due date'}
                 </p>
               </div>
             </div>
@@ -295,7 +311,9 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, tasks }) => {
               <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                 <LayoutDashboard className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">No activity yet</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                No activity yet
+              </h3>
               <p className="text-gray-500 dark:text-gray-400 mt-1">
                 Create your first task to see activity here.
               </p>

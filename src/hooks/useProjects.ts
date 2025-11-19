@@ -46,18 +46,18 @@ export const useProjects = ({
       addNotification('error', 'You do not have permission to delete projects');
       return;
     }
-    
+
     try {
       await api.projects.delete(id);
-      
+
       const projectToDelete = projects.find((p) => p.id === id);
       setProjects(projects.filter((p) => p.id !== id));
       setTasks((tasks: Task[]) => tasks.filter((t) => t.projectId !== id));
-      
+
       if (selectedProject?.id === id) {
         setSelectedProject(null);
       }
-      
+
       if (projectToDelete) {
         addNotification('info', `Proyecto "${projectToDelete.name}" eliminado`);
       }
@@ -71,12 +71,13 @@ export const useProjects = ({
     try {
       if (editingProject) {
         // Update existing project
-        const updatedProject = await api.projects.update(editingProject.id, projectData);
-        
+        const updatedProject = await api.projects.update(
+          editingProject.id,
+          projectData
+        );
+
         setProjects(
-          projects.map((p) =>
-            p.id === editingProject.id ? updatedProject : p
-          )
+          projects.map((p) => (p.id === editingProject.id ? updatedProject : p))
         );
         addNotification(
           'success',
@@ -85,7 +86,7 @@ export const useProjects = ({
       } else {
         // Create new project
         const newProject = await api.projects.create(projectData);
-        
+
         setProjects([newProject, ...projects]);
         addNotification(
           'success',

@@ -56,7 +56,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 {task.priority}
               </span>
             </div>
-            
+
             <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity gap-1">
               <button
                 onClick={(e) => {
@@ -112,7 +112,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
             <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
               <Calendar className="w-3 h-3" />
-              {task.dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+              {task.dueDate.toLocaleDateString(undefined, {
+                month: 'short',
+                day: 'numeric',
+              })}
             </div>
           </div>
         </div>

@@ -65,8 +65,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={`w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.name 
-                  ? 'border-red-500 focus:ring-red-500' 
+                errors.name
+                  ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="e.g., Website Redesign"
@@ -109,8 +109,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Saving...
                 </>
+              ) : project ? (
+                'Save Changes'
               ) : (
-                project ? 'Save Changes' : 'Create Project'
+                'Create Project'
               )}
             </button>
           </div>

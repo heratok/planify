@@ -196,19 +196,21 @@ const Projects: React.FC<ProjectsProps> = ({
 
     // Update the task status based on the destination column
     const newStatus = destination.droppableId as TaskStatus;
-    
+
     // Optimistically update UI
     setTasks(
       tasks.map((t) => (t.id === draggableId ? { ...t, status: newStatus } : t))
     );
-    
+
     // Persist to Supabase
     try {
       await tasksHook.updateTask(draggableId, { status: newStatus });
-    } catch (error) {
+    } catch {
       // Revert on error
       setTasks(
-        tasks.map((t) => (t.id === draggableId ? { ...t, status: task.status } : t))
+        tasks.map((t) =>
+          t.id === draggableId ? { ...t, status: task.status } : t
+        )
       );
     }
   };

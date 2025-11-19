@@ -23,7 +23,7 @@ export function useLocalStorage<T>(
     try {
       const item = window.localStorage.getItem(key);
       if (!item) return initialValue;
-      
+
       try {
         return parseJSONWithDates<T>(item);
       } catch {

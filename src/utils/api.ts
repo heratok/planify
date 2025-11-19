@@ -8,11 +8,11 @@ export const api = {
         .from('projects')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      
+
       // Transform snake_case to camelCase
-      return (data || []).map(p => ({
+      return (data || []).map((p) => ({
         id: p.id,
         name: p.name,
         description: p.description,
@@ -26,13 +26,13 @@ export const api = {
         .insert({
           name: project.name,
           description: project.description,
-          owner_id: (await supabase.auth.getUser()).data.user?.id
+          owner_id: (await supabase.auth.getUser()).data.user?.id,
         })
         .select()
         .single();
-      
+
       if (error) throw error;
-      
+
       return {
         id: data.id,
         name: data.name,
@@ -51,9 +51,9 @@ export const api = {
         .eq('id', id)
         .select()
         .single();
-      
+
       if (error) throw error;
-      
+
       return {
         id: data.id,
         name: data.name,
@@ -63,11 +63,8 @@ export const api = {
     },
 
     delete: async (id: string) => {
-      const { error } = await supabase
-        .from('projects')
-        .delete()
-        .eq('id', id);
-      
+      const { error } = await supabase.from('projects').delete().eq('id', id);
+
       if (error) throw error;
     },
   },
@@ -79,11 +76,11 @@ export const api = {
         .select('*')
         .eq('project_id', projectId)
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      
+
       // Transform snake_case to camelCase
-      return (data || []).map(t => ({
+      return (data || []).map((t) => ({
         id: t.id,
         title: t.title,
         description: t.description,
@@ -110,9 +107,9 @@ export const api = {
         })
         .select()
         .single();
-      
+
       if (error) throw error;
-      
+
       return {
         id: data.id,
         title: data.title,
@@ -127,24 +124,26 @@ export const api = {
     },
 
     update: async (id: string, task: Partial<Task>) => {
-      const updateData: any = {};
-      
+      const updateData: Record<string, unknown> = {};
+
       if (task.title !== undefined) updateData.title = task.title;
-      if (task.description !== undefined) updateData.description = task.description;
+      if (task.description !== undefined)
+        updateData.description = task.description;
       if (task.priority !== undefined) updateData.priority = task.priority;
       if (task.dueDate !== undefined) updateData.due_date = task.dueDate;
-      if (task.assignedUser !== undefined) updateData.assigned_user = task.assignedUser;
+      if (task.assignedUser !== undefined)
+        updateData.assigned_user = task.assignedUser;
       if (task.status !== undefined) updateData.status = task.status;
-      
+
       const { data, error } = await supabase
         .from('tasks')
         .update(updateData)
         .eq('id', id)
         .select()
         .single();
-      
+
       if (error) throw error;
-      
+
       return {
         id: data.id,
         title: data.title,
@@ -159,11 +158,8 @@ export const api = {
     },
 
     delete: async (id: string) => {
-      const { error } = await supabase
-        .from('tasks')
-        .delete()
-        .eq('id', id);
-      
+      const { error } = await supabase.from('tasks').delete().eq('id', id);
+
       if (error) throw error;
     },
   },
