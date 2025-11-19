@@ -7,10 +7,9 @@ import LayoutWrapper from './components/LayoutWrapper';
 import LoginPage from './pages/LoginPage';
 import type { Project, Task } from './utils/types';
 import { api } from './utils/api';
-import { Loader2 } from 'lucide-react';
 
 function AppContent() {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   // const [isLoading, setIsLoading] = useState(false); // Eliminado porque no se usa
@@ -37,13 +36,7 @@ function AppContent() {
     }
   };
 
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <Loader2 className="w-12 h-12 text-primary-600 animate-spin" />
-      </div>
-    );
-  }
+  // Loading state handled inside useAuth or higher-order component
 
   if (!isAuthenticated) {
     return <LoginPage />;
